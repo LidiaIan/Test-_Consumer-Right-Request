@@ -11,12 +11,10 @@ opt_out = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()
 opt_out.get('https://optoutccpa-devenv.bigdbm.com/')
 opt_out.maximize_window()
 
-
-
 submit = opt_out.find_element(by=By.CLASS_NAME, value="btn-primary")
 opt_out.execute_script("arguments[0].scrollIntoView();", submit)
 time.sleep(2)
-submit.click()
+# submit.click()
 
 agreement_box = opt_out.find_element(by=By.ID, value="inlineFormCheck")
 time.sleep(2)
@@ -34,7 +32,7 @@ opt_out.find_element(by=By.ID, value="formCheckSpecial").click()
 submit = opt_out.find_element(by=By.CLASS_NAME, value="btn-primary")
 opt_out.execute_script("arguments[0].scrollIntoView();", submit)
 time.sleep(2)
-submit.click()
+# submit.click()
 
 
 first_name = opt_out.find_element(value="horizontal-firstname-input")
@@ -72,7 +70,7 @@ agent_verif.send_keys("secret")
 time.sleep(4)
 
 submit = opt_out.find_element(by=By.CLASS_NAME, value="btn-primary")
-submit.click()
+# submit.click()
 
 # #ERROR: ModuleNotFoundError: No module named 'element'
 # home_elements = opt_out.find_element(by=By.CLASS_NAME, value="nav-link text-dark")
