@@ -9,7 +9,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 class OpenPage(TestCase):
-    MAIN_URL = 'https://optoutccpa.com/'
+    MAIN_URL = 'https://optoutccpa-devenv.bigdbm.com/'
 
     def setUp(self) -> None:
         self.browser = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
@@ -28,7 +28,7 @@ class OpenPage(TestCase):
 
 
 class DisplayedMessages(TestCase):
-    MAIN_URL = 'https://optoutccpa.com/'
+    MAIN_URL = 'https://optoutccpa-devenv.bigdbm.com/'
     SUBMIT_BUTTON_SELECTOR = (By.CLASS_NAME, "btn-primary")
 
     def setUp(self) -> None:
@@ -71,7 +71,7 @@ class DisplayedMessages(TestCase):
 
 
 class SubmitFormAddress(TestCase):
-    MAIN_URL = 'https://optoutccpa.com/'
+    MAIN_URL = 'https://optoutccpa-devenv.bigdbm.com/'
     AGREEMENT_BOX_SELECTOR = (By.ID, "inlineFormCheck")
     SUBMIT_BUTTON_SELECTOR = (By.CLASS_NAME, "btn-primary")
 
@@ -118,7 +118,7 @@ class SubmitFormAddress(TestCase):
 
 
 class SubmitFormEmail(TestCase):
-    MAIN_URL = 'https://optoutccpa.com/'
+    MAIN_URL = 'https://optoutccpa-devenv.bigdbm.com/'
     AGREEMENT_BOX_SELECTOR = (By.ID, "inlineFormCheck")
     SUBMIT_BUTTON_SELECTOR = (By.CLASS_NAME, "btn-primary")
 
@@ -156,7 +156,7 @@ class SubmitFormEmail(TestCase):
 
 
 class SubmitFormPhone(TestCase):
-    MAIN_URL = 'https://optoutccpa.com/'
+    MAIN_URL = 'https://optoutccpa-devenv.bigdbm.com/'
     AGREEMENT_BOX_SELECTOR = (By.ID, "inlineFormCheck")
     SUBMIT_BUTTON_SELECTOR = (By.CLASS_NAME, "btn-primary")
 
@@ -188,3 +188,36 @@ class SubmitFormPhone(TestCase):
         time.sleep(4)
         self.assertEqual(self.browser.current_url, f"{self.MAIN_URL}Home/SaveConsumer",
                          'Formularul nu a fost trimis')
+
+        '''Verificam ca putem accesa linkurile din pagina'''
+
+
+class AccessLinks(TestCase):
+    MAIN_URL = 'https://optoutccpa-devenv.bigdbm.com/'
+
+    def setUp(self) -> None:
+        self.browser = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+        self.browser.get(self.MAIN_URL)
+        self.browser.maximize_window()
+        self.browser.implicitly_wait(10)
+
+    def tearDown(self) -> None:
+        self.browser.quit()
+
+    def test_privacy_page(self):
+        privacy_link = self.browser.find_element(by=By.LINK_TEXT, value='Privacy')
+        time.sleep(4)
+        privacy_link.click()
+        time.sleep(3)
+        self.assertEqual(self.browser.current_url, f"https://bigdbm.com/privacy.html",
+                            'Pagina de Privacy Policy nu poate fi accesata')
+        print(self.browser.current_url)
+
+    def test_opt_out_of_sale(self):
+        opt_out_link = self.browser.find_element(by=By.LINK_TEXT, value='Opt Out of Sale')
+        time.sleep(4)
+        opt_out_link.click()
+        time.sleep(3)
+        self.assertEqual(self.browser.current_url, f"https://optout.bigdbm.com/",
+                            'Pagina de Opt out of Sale nu poate fi accesata')
+        print(self.browser.current_url)
